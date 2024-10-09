@@ -91,7 +91,7 @@ app.put('/todos/:id', async (c: Context) => {
       return c.json({ message: 'Todo not found' }, 404);
     }
     if (title == '' || title && title.length > 300) {
-      return c.json({ message: 'Title is required, Cannot be empty string and should be within 300 characters' },
+      return c.json({ message: 'Title is required, Cannot be empty string and should be within 300 characters'},
         400);
     }
 
