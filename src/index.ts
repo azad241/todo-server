@@ -33,8 +33,8 @@ app.post('/todos', async (c: Context) => {
     }
     const { title, status = 'todo' }: { title: string; status?: string } = body;
 
-    if (!title) {
-      return c.json({ message: 'Title is required' }, 400);
+    if (!title || title.length > 300) {
+      return c.json({ message: 'Title is required and should be within 300 characters' }, 400);
     }
 
     const now = new Date().toISOString();
@@ -53,7 +53,7 @@ app.post('/todos', async (c: Context) => {
       todo: newTodo,
     }, 201);
   } catch (error) {
-    return c.json({ message: 'Invalid JSON data' }, 400);
+    return c.json({ message: 'Invalid JSON or request body' }, 400);
   }
 });
 
@@ -89,6 +89,9 @@ app.put('/todos/:id', async (c: Context) => {
 
     if (todoIndex === -1) {
       return c.json({ message: 'Todo not found' }, 404);
+    }
+    if (!title || title.length > 300) {
+      return c.json({ message: 'Title is required and should be within 300 characters' }, 400);
     }
 
     todos[todoIndex] = {
